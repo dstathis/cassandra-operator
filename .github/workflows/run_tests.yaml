@@ -47,4 +47,4 @@ jobs:
         charmcraft build
 
     - name: Test
-      run: ./integration.py
+      run: python -m pytest integration.py

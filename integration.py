@@ -15,11 +15,14 @@
 #  limitations under the License.
 
 import logging
+import pytest
+import unittest
 from juju import loop
 from juju.model import Model
 
 
-async def deploy():
+@pytest.mark.asyncio
+async def test_build_and_deploy():
     model = Model()
     print("Connecting")
     await model.connect()
@@ -31,17 +34,6 @@ async def deploy():
             "cassandra-image": "dstathis/cassandra-operator-image:latest"
         }, series="focal")
         print("Deploying Complete")
-        await model.block_until(lambda: app.status == "active", timeout=300)
-        await app.add_unit(count=2)
-        await model.block_until(lambda: app.status == "active", timeout=300)
+        await model.block_until(lambda: app.status == "active", timeout=900)
     finally:
         await model.disconnect()
-
-
-def main():
-    logging.basicConfig(level=logging.INFO)
-    loop.run(deploy())
-
-
-if __name__ == "__main__":
-    main()
