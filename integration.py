@@ -18,6 +18,7 @@ import logging
 from juju import loop
 from juju.model import Model
 
+
 async def deploy():
     model = Model()
     print("Connecting")
@@ -35,6 +36,7 @@ async def deploy():
         await model.block_until(lambda: app.status == "active", timeout=300)
     finally:
         await model.disconnect()
+
 
 def main():
     logging.basicConfig(level=logging.INFO)
