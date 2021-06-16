@@ -1,6 +1,6 @@
 name: Run-Tests
 
-on: [pull_request]
+on: [pull_request, push]
 
 jobs:
   run-tests:
@@ -23,3 +23,25 @@ jobs:
 
       - name: Run tests
         run: ./run_tests
+
+  run-integration:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Setup Operator Environment
+      uses: charmed-kubernetes/actions-operator@master
+      with:
+        provider: microk8s
+
+    - name: Build
+      run: |
+        charmcraft build
+
+    - name: Test
+      run: ./integration.py

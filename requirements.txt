@@ -1,3 +1,4 @@
+#ops
 git+https://github.com/balbirthomas/operator/@provider-consumer-lib#egg=ops
 cassandra-driver
 semantic-version
